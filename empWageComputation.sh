@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 echo " Welcome to Employee Wage Computation Program "
 
 #variables
@@ -13,8 +13,10 @@ EMP_CHECK=$((RANDOM%3));
 totalEmpHr=0;
 totalWorkingDays=0;
 
+declare -A dailywage
+
 function getWorkHrs() {
-	local $EMP_CHECK=$1
+#	local $EMP_CHECK=$1
 		case $EMP_CHECK  in
             $IS_FULL_TIME)
                      empHrs=8
@@ -29,7 +31,7 @@ function getWorkHrs() {
 			echo $empHrs
 }
 function getEmpWage() {
-	local empHrs=$1
+#	local empHrs=$1
 		echo $(( $empHrs * $EMP_WAGE_PER_HR ))
 }
 while [[ $totalEmpHr -lt $MAX_HRS_IN_MONTH && $totalWorkingDays -lt $NUM_OF_WORKING_DAYS ]]
@@ -43,3 +45,4 @@ done
 	TotalSalary=$(( $totalEmpHr * $EMP_WAGE_PER_HR ))
 	echo $TotalSalary
 	echo ${dailywage[@]}
+	echo ${!dailywage[@]}

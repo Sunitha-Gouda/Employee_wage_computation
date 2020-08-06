@@ -7,15 +7,14 @@ IS_FULL_TIME=2
 EMP_WAGE_PER_HR=20;
 NUM_OF_WORKING_DAYS=20;
 MAX_HRS_IN_MONTH=100;
-EMP_CHECK=$((RANDOM%3))
+EMP_CHECK=$((RANDOM%3));
 
 #constants
 totalEmpHr=0;
 totalWorkingDays=0;
 
-while [[ $totalEmpHr -lt $MAX_HRS_IN_MONTH && $totalWorkingDays -lt $NUM_OF_WORKING_DAYS ]]
-do
-   ((totalWorkingDays++))
+function getWorkHrs() {
+	local $EMP_CHECK=$1
 		case $EMP_CHECK  in
             $IS_FULL_TIME)
                      empHrs=8
@@ -26,10 +25,16 @@ do
             *)
                      empHrs=0
                      ;;
-      esac
+		esac
+			echo $empHrs
+}
 
-
-totalEmpHr=$(( $totalEmpHr + $empHrs ))
+while [[ $totalEmpHr -lt $MAX_HRS_IN_MONTH && $totalWorkingDays -lt $NUM_OF_WORKING_DAYS ]]
+do
+	((totalWorkingDays++))
+	EMP_CHECK=$((RANDOM%3));
+	empHrs="$( getWorkHrs $EMP_CHECK )"
+	totalEmpHr=$(( $totalEmpHr + $empHrs ))
 done
 		TotalSalary=$(( $totalEmpHr * $EMP_WAGE_PER_HR ))
 			echo $TotalSalary

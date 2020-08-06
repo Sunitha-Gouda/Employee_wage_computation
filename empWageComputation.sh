@@ -7,17 +7,17 @@ IS_FULL_TIME=2
 EMP_WAGE_PER_HR=20;
 
 EMP_CHECK=$((RANDOM%3))
-if [ $EMP_CHECK -eq $IS_FULL_TIME ]
-then
-	echo "Employee is Full time employee  "
-	empHrs=8;
-elif [ $EMP_CHECK -eq $IS_PART_TIME ]
-then
-	echo " Employee s Part time employee  "
-	empHrs=4;
-else
-	empHrs=0;
-	echo " Employee is Absent "
-fi
+case $EMP_CHECK  in
+	$IS_FULL_TIME)
+			empHrs=8
+			;;
+	$IS_PART_ITME)
+			empHrs=4
+			;;
+	*)
+			empHrs=0
+			;;
+esac
+
 Salary=$(($EMP_WAGE_PER_HR * $empHrs ))
 echo " Salary = " $Salary
